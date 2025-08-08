@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; }
+    * { box-sizing: border-box; }
+
+    input[type=text], input[type=email], select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      resize: vertical;
+    }
+
+    input[type=submit] {
+      background-color: #04AA6D;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+      background-color: #45a049;
+    }
+
+    .container {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+  </style>
+
+  <!-- EmailJS Library -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function(){
+      emailjs.init({
+        publicKey: "JP1fNNgnZNSTG3m5T", 
+      });
+    })();
+  </script>
+</head>
+
+<body>
+
+<h3>Contact Form</h3>
+
+<div class="container">
+  <form id="contactForm">
+    <label for="fname">First Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your name.." required>
+
+    <label for="lname">Last Name</label>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name.." required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" placeholder="Your Email" required>
+
+    <label for="phonenumber">Phone Number</label>
+    <input type="number" id="number" name="phonenumber" placeholder="Your P.No" required>
+
+    <label for="message">Message</label>
+    <textarea id="message" name="message" placeholder="Write something.." style="height:200px" required></textarea>
+
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+<script>
+  document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // Prevent form reload
+
+    // Get form values
+    const fname = document.getElementById("fname").value;
+    const lname = document.getElementById("lname").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
+    const number = document.getElementById("number").value
+
+    // Send email via EmailJS
+    emailjs.send("service_b1vx8xu", "template_a7libhi", {
+      firstname: fname,
+      lastname: lname,
+      email: email,
+      message: message,
+      number:number
+    }).then(function(response) {
+      console.log('SUCCESS!', response.status, response.text);
+      alert("Message sent successfully!");
+      document.getElementById("contactForm").reset(); // Reset form
+    }, function(error) {
+      console.log('FAILED...', error);
+      alert("Failed to send message. Please try again later.");
+    });
+  });
+</script>
+
+</body>
+</html>
+
